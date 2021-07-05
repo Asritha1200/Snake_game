@@ -1,18 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <conio.h>
-
 #include <unistd.h>
-
 int height=20,width=20;
 int fruitx,fruity;
 int x,y;
-int gameover=0,score=0;
-int flag=0;
+int gameover,score=0;
+int flag;
 
 void setup()
 {
+    gameover=0;
     y=height/2;
     x=width/2;
 
@@ -44,7 +42,9 @@ void draw()
                 printf("#");
 
             }
-            else if(i==y && j==x)
+            else{
+
+            if(i==y && j==x)
             {
                 printf("0");
             }
@@ -55,50 +55,53 @@ void draw()
             }
             else
             printf(" ");
+            }
 
         }
         printf("\n");
 
     }
-    printf("press x to quit\n");
     printf("score is %d",score);
+    printf("\n");
+    printf("press x to quit\n");
+    
 }
 
 void input()
 {
     if(kbhit())
     {
-        
+        switch(getch())
+        {
+            case 'a':
+                flag=1;
+                break;
+            case 'd':
+                flag=2;
+                break;
     
-    switch(getchar())
-    {
-        case 'a':
-            flag=1;
-            break;
-        case 'd':
-             flag=2;
-             break;
-    
-        case 'w':
-             flag=3;
-             break;
+            case 'w':
+                flag=3;
+                break;
              
-        case 's':
-             flag=4;
-             break;
+            case 's':
+                flag=4;
+                break;
         
-        case 'x':
-             gameover=1;
-             break;
+            case 'x':
+                gameover=1;
+                break;
          
-    }
+        
+        }
+
     }
 
 }
 
 void logic()
 {
-      sleep(0.1);
+      sleep(0.0001);
     switch(flag)
     {
         case 1:
@@ -116,9 +119,6 @@ void logic()
         default:
             break;
 
-        
-
-
     }
 
 if(x<0||x>width||y<0||y>height)
@@ -126,7 +126,7 @@ if(x<0||x>width||y<0||y>height)
     gameover=1;
 }
 
-if(x==fruitx&&y==fruity)
+if(y==fruitx&&x==fruity)
 {
 
     score=score+10;
@@ -157,5 +157,5 @@ int main()
         logic();
 
     }
-    return 0;
+    
 }
